@@ -16,7 +16,7 @@ body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,-appl
 .btn:hover{border-color:var(--mu)}.btn.sm{padding:2px 8px;font-size:12px}
 .btn.primary{background:#1f883d;border-color:#1f883d;color:#fff}
 :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.panel{padding:16px;max-width:1600px;margin:0 auto}
+.panel{padding:16px 16px 30vh;max-width:1600px;margin:0 auto}
 [hidden]{display:none!important}
 
 /* Text compare */
@@ -30,7 +30,7 @@ textarea{min-height:180px;resize:vertical;background:var(--bg);color:var(--fg);b
 .dv{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--bd);border-radius:6px;overflow:hidden;max-height:70vh}
 .pane{overflow:auto;max-height:70vh;font-size:12px;line-height:20px;min-width:0}
 .pane[data-side=l]{border-right:1px solid var(--bd)}
-.lines{min-width:max-content}
+.lines{min-width:max-content;padding-bottom:48px} /* room under the last line, clear of the scrollbar */
 .row{white-space:pre;padding-right:12px;tab-size:4}
 /* Line numbers are generated content: never selectable, never copied. */
 .row::before{content:attr(data-n) " " attr(data-s);display:inline-block;width:62px;padding-right:8px;margin-right:8px;text-align:right;color:var(--mu);

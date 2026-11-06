@@ -45,8 +45,11 @@
     el.innerHTML='<div class="dv">'+pane('l',labelL)+pane('r',labelR)+'</div>';
     const dv=el.firstChild, L=dv.children[0], R=dv.children[1];
     // Keep both panes scrolled together (they remain separate containers).
-    let lock=false;
-    const sync=(from,to)=>from.addEventListener('scroll',()=>{ if(lock)return; lock=true; to.scrollTop=from.scrollTop; to.scrollLeft=from.scrollLeft; requestAnimationFrame(()=>lock=false); });
+    // Mirror scroll position only when it differs; this ends the feedback loop without delaying scrolling.
+    const sync=(from,to)=>from.addEventListener('scroll',()=>{
+      if(to.scrollTop!==from.scrollTop) to.scrollTop=from.scrollTop;
+      if(to.scrollLeft!==from.scrollLeft) to.scrollLeft=from.scrollLeft;
+    },{passive:true});
     sync(L,R); sync(R,L);
     // Copy isolation: whichever pane the user presses in becomes the only selectable one.
     [[L,'l'],[R,'r']].forEach(([p,s])=>{
