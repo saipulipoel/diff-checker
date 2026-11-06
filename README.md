@@ -2,6 +2,8 @@
 
 Static web tool: **Text Compare** and **Zip Diff Check**. Plain HTML/CSS/JS. Everything runs in the browser; no files are uploaded anywhere.
 
+`favicon.svg` is used as the tab icon and header logo.
+
 Libraries (CDN, pinned): jsdiff 5.2.0, JSZip 3.10.1. For offline use, download them into `js/` and update the two `<script>` tags in `index.html`.
 
 ## Deploy to GitHub Pages

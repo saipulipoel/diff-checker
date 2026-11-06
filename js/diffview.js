@@ -33,8 +33,9 @@
   const cell=c=>{
     if(!c) return '<div class="row pad" data-n="" data-s=""></div>';
     const body=c.h? c.h.map(([t,m])=>m?'<mark>'+esc(t)+'</mark>':esc(t)).join('') : esc(c.t);
+    const body2=body===''?'<br>':body;   // <br> lets empty lines be selected/copied as a newline without adding characters
     const sym=c.c==='add'?'+':c.c==='del'?'-':' ';   // marker shown in the gutter (generated content, not copyable)
-    return '<div class="row '+(c.c||'')+'" data-n="'+c.n+'" data-s="'+sym+'">'+body+'</div>';
+    return '<div class="row '+(c.c||'')+'" data-n="'+c.n+'" data-s="'+sym+'">'+body2+'</div>';
   };
 
   /* Render into `el`. Returns the number of changed rows. */

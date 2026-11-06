@@ -8,7 +8,8 @@ body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,-appl
 .mono,.pane,textarea{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .muted{color:var(--mu)}.small{font-size:12px}.spacer{flex:1}
 .top{display:flex;align-items:center;gap:16px;padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--bd);flex-wrap:wrap}
-.top h1{font-size:16px;margin:0}
+.top h1{font-size:16px;margin:0;display:flex;align-items:center;gap:8px}
+.logo{border-radius:5px}
 .tabs{display:flex;gap:4px;flex:1}
 .tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--mu);padding:6px 10px;cursor:pointer;font:inherit}
 .tab.active{color:var(--fg);border-color:#fd8c73;font-weight:600}
