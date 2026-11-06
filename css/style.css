@@ -1,8 +1,8 @@
 /* GitHub-inspired tokens. Dark theme follows the OS unless the user toggles. */
 :root{--bg:#fff;--bg2:#f6f8fa;--bd:#d0d7de;--fg:#1f2328;--mu:#656d76;--ac:#0969da;
- --add:#dafbe1;--addw:#aceebb;--del:#ffebe9;--delw:#ffcecb;--pad:#f6f8fa;--mod:#9a6700;--okc:#1a7f37;--errc:#cf222e}
+ --add:#e6ffec;--addg:#ccffd8;--addw:#abf2bc;--del:#ffebe9;--delg:#ffd7d5;--delw:#ffc1c0;--pad:#f6f8fa;--mod:#9a6700;--okc:#1a7f37;--errc:#cf222e}
 :root[data-theme=dark]{--bg:#0d1117;--bg2:#161b22;--bd:#30363d;--fg:#e6edf3;--mu:#8d96a0;--ac:#4493f8;
- --add:#12261e;--addw:#1f6f3a;--del:#2d1517;--delw:#8e2a2f;--pad:#161b22;--mod:#d29922;--okc:#3fb950;--errc:#f85149}
+ --add:#0f2e1a;--addg:#1a4d2c;--addw:#238636;--del:#3a1618;--delg:#6b2226;--delw:#b62324;--pad:#161b22;--mod:#d29922;--okc:#3fb950;--errc:#f85149}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .mono,.pane,textarea{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
@@ -33,15 +33,18 @@ textarea{min-height:180px;resize:vertical;background:var(--bg);color:var(--fg);b
 .lines{min-width:max-content}
 .row{white-space:pre;padding-right:12px;tab-size:4}
 /* Line numbers are generated content: never selectable, never copied. */
-.row::before{content:attr(data-n);display:inline-block;width:48px;padding-right:8px;margin-right:8px;text-align:right;color:var(--mu);
- background:inherit;position:sticky;left:0;user-select:none;-webkit-user-select:none;border-right:1px solid var(--bd)}
+.row::before{content:attr(data-n) " " attr(data-s);display:inline-block;width:62px;padding-right:8px;margin-right:8px;text-align:right;color:var(--mu);
+ background:var(--bg);position:sticky;left:0;user-select:none;-webkit-user-select:none;border-right:1px solid var(--bd);border-left:4px solid transparent}
 .row.add{background:var(--add)}.row.del{background:var(--del)}
-.row.pad{background:var(--pad)}
-.row mark{background:var(--addw);color:inherit;border-radius:2px}
-.row.del mark{background:var(--delw)}
+.row.add::before{background:var(--addg);color:var(--fg);font-weight:700;border-left-color:var(--okc)}
+.row.del::before{background:var(--delg);color:var(--fg);font-weight:700;border-left-color:var(--errc)}
+.row.pad{background:repeating-linear-gradient(135deg,var(--pad) 0 6px,transparent 6px 12px)}
+.row.pad::before{background:var(--pad)}
+.row mark{background:var(--addw);color:inherit;border-radius:2px;box-shadow:0 0 0 1px var(--okc)}
+.row.del mark{background:var(--delw);box-shadow:0 0 0 1px var(--errc)}
 /* Copy isolation: once the user presses in one pane, the other pane becomes unselectable. */
 .dv[data-active=l] .pane[data-side=r],.dv[data-active=r] .pane[data-side=l]{user-select:none;-webkit-user-select:none}
-.plabel{padding:6px 10px;background:var(--bg2);border-bottom:1px solid var(--bd);font-weight:600;font-size:12px;position:sticky;top:0;z-index:1}
+.plabel{display:flex;justify-content:space-between;align-items:center;gap:8px;left:0;padding:4px 10px;background:var(--bg2);border-bottom:1px solid var(--bd);font-weight:600;font-size:12px;position:sticky;top:0;z-index:1}
 .note{padding:16px;border:1px dashed var(--bd);border-radius:6px;color:var(--mu)}
 
 /* Zip diff */

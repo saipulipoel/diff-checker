@@ -31,16 +31,17 @@
   }
 
   const cell=c=>{
-    if(!c) return '<div class="row pad" data-n=""></div>';
+    if(!c) return '<div class="row pad" data-n="" data-s=""></div>';
     const body=c.h? c.h.map(([t,m])=>m?'<mark>'+esc(t)+'</mark>':esc(t)).join('') : esc(c.t);
-    return '<div class="row '+(c.c||'')+'" data-n="'+c.n+'">'+body+'</div>';
+    const sym=c.c==='add'?'+':c.c==='del'?'-':' ';   // marker shown in the gutter (generated content, not copyable)
+    return '<div class="row '+(c.c||'')+'" data-n="'+c.n+'" data-s="'+sym+'">'+body+'</div>';
   };
 
   /* Render into `el`. Returns the number of changed rows. */
   function render(el,a,b,labelL,labelR){
     const rows=buildRows(a,b);
     const changed=rows.filter(r=>!r.l||!r.r||r.l.c||r.r.c).length;
-    const pane=(side,label)=>'<div class="pane" data-side="'+side+'"><div class="plabel">'+esc(label)+'</div><div class="lines">'+rows.map(r=>cell(r[side])).join('')+'</div></div>';
+    const pane=(side,label)=>'<div class="pane" data-side="'+side+'"><div class="plabel"><span>'+esc(label)+'</span><button type="button" class="btn sm copy" data-side="'+side+'" title="Copy all text on this side">Copy</button></div><div class="lines">'+rows.map(r=>cell(r[side])).join('')+'</div></div>';
     el.innerHTML='<div class="dv">'+pane('l',labelL)+pane('r',labelR)+'</div>';
     const dv=el.firstChild, L=dv.children[0], R=dv.children[1];
     // Keep both panes scrolled together (they remain separate containers).
@@ -51,6 +52,15 @@
     [[L,'l'],[R,'r']].forEach(([p,s])=>{
       ['mousedown','touchstart'].forEach(ev=>p.addEventListener(ev,()=>{ dv.dataset.active=s; getSelection().removeAllRanges(); },{passive:true}));
     });
+    // Copy button: copies the whole content of ONE side (padding rows are skipped, so only real lines are copied).
+    dv.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{
+      const side=btn.dataset.side, text=rows.filter(r=>r[side]).map(r=>r[side].t).join('\n');
+      try{ await navigator.clipboard.writeText(text); }
+      catch(e){ // fallback for non-secure contexts
+        const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      }
+      const old=btn.textContent; btn.textContent='Copied'; setTimeout(()=>btn.textContent=old,1200);
+    }));
     return changed;
   }
   window.DiffView={render,esc};
