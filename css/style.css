@@ -1,0 +1,73 @@
+/* GitHub-inspired tokens. Dark theme follows the OS unless the user toggles. */
+:root{--bg:#fff;--bg2:#f6f8fa;--bd:#d0d7de;--fg:#1f2328;--mu:#656d76;--ac:#0969da;
+ --add:#dafbe1;--addw:#aceebb;--del:#ffebe9;--delw:#ffcecb;--pad:#f6f8fa;--mod:#9a6700;--okc:#1a7f37;--errc:#cf222e}
+:root[data-theme=dark]{--bg:#0d1117;--bg2:#161b22;--bd:#30363d;--fg:#e6edf3;--mu:#8d96a0;--ac:#4493f8;
+ --add:#12261e;--addw:#1f6f3a;--del:#2d1517;--delw:#8e2a2f;--pad:#161b22;--mod:#d29922;--okc:#3fb950;--errc:#f85149}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.mono,.pane,textarea{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.muted{color:var(--mu)}.small{font-size:12px}.spacer{flex:1}
+.top{display:flex;align-items:center;gap:16px;padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.top h1{font-size:16px;margin:0}
+.tabs{display:flex;gap:4px;flex:1}
+.tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--mu);padding:6px 10px;cursor:pointer;font:inherit}
+.tab.active{color:var(--fg);border-color:#fd8c73;font-weight:600}
+.btn{background:var(--bg2);color:var(--fg);border:1px solid var(--bd);border-radius:6px;padding:5px 12px;cursor:pointer;font:inherit}
+.btn:hover{border-color:var(--mu)}.btn.sm{padding:2px 8px;font-size:12px}
+.btn.primary{background:#1f883d;border-color:#1f883d;color:#fff}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.panel{padding:16px;max-width:1600px;margin:0 auto}
+[hidden]{display:none!important}
+
+/* Text compare */
+.inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-weight:600}
+textarea{min-height:180px;resize:vertical;background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:6px;padding:8px;font-size:12px;line-height:20px;font-weight:400}
+.bar{display:flex;align-items:center;gap:14px;margin:12px 0}
+.chk{display:flex;gap:6px;align-items:center}
+
+/* Side-by-side diff. Two INDEPENDENT scroll containers (.pane). */
+.dv{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--bd);border-radius:6px;overflow:hidden;max-height:70vh}
+.pane{overflow:auto;max-height:70vh;font-size:12px;line-height:20px;min-width:0}
+.pane[data-side=l]{border-right:1px solid var(--bd)}
+.lines{min-width:max-content}
+.row{white-space:pre;padding-right:12px;tab-size:4}
+/* Line numbers are generated content: never selectable, never copied. */
+.row::before{content:attr(data-n);display:inline-block;width:48px;padding-right:8px;margin-right:8px;text-align:right;color:var(--mu);
+ background:inherit;position:sticky;left:0;user-select:none;-webkit-user-select:none;border-right:1px solid var(--bd)}
+.row.add{background:var(--add)}.row.del{background:var(--del)}
+.row.pad{background:var(--pad)}
+.row mark{background:var(--addw);color:inherit;border-radius:2px}
+.row.del mark{background:var(--delw)}
+/* Copy isolation: once the user presses in one pane, the other pane becomes unselectable. */
+.dv[data-active=l] .pane[data-side=r],.dv[data-active=r] .pane[data-side=l]{user-select:none;-webkit-user-select:none}
+.plabel{padding:6px 10px;background:var(--bg2);border-bottom:1px solid var(--bd);font-weight:600;font-size:12px;position:sticky;top:0;z-index:1}
+.note{padding:16px;border:1px dashed var(--bd);border-radius:6px;color:var(--mu)}
+
+/* Zip diff */
+.drops{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.drop{border:2px dashed var(--bd);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:4px;cursor:pointer;color:var(--mu)}
+.drop b{color:var(--fg)}.drop.over,.drop:hover{border-color:var(--ac)}.drop.ok{border-style:solid;border-color:var(--okc)}
+.zapp{display:grid;grid-template-columns:320px minmax(0,1fr);gap:12px;margin-top:12px}
+.side{border:1px solid var(--bd);border-radius:6px;padding:8px;max-height:75vh;overflow:auto}
+.filters{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
+.chip{border:1px solid var(--bd);background:var(--bg);color:var(--fg);border-radius:999px;padding:2px 10px;cursor:pointer;font:inherit;font-size:12px}
+.chip.active{background:var(--ac);border-color:var(--ac);color:#fff}
+.tree details>summary{cursor:pointer;padding:2px 0;list-style:none}
+.tree details>summary::before{content:"▸ ";color:var(--mu)}.tree details[open]>summary::before{content:"▾ "}
+.tree .kids{margin-left:14px;border-left:1px solid var(--bd);padding-left:6px}
+.leaf{display:flex;gap:6px;align-items:center;padding:2px 4px;border-radius:4px;cursor:pointer;word-break:break-all}
+.leaf:hover{background:var(--bg2)}.leaf.sel{background:var(--bg2);outline:1px solid var(--ac)}
+.st{width:16px;text-align:center;font-weight:700;font-family:ui-monospace,monospace}
+.st.added{color:var(--okc)}.st.removed{color:var(--errc)}.st.modified{color:var(--mod)}.st.unchanged{color:var(--mu)}
+.fdot{color:var(--mod)}
+.vhead{display:flex;gap:10px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.path{font-family:ui-monospace,monospace;font-size:12px;word-break:break-all}
+.badge{font-size:12px;border:1px solid var(--bd);border-radius:999px;padding:0 8px}
+.badge.added{color:var(--okc)}.badge.removed{color:var(--errc)}.badge.modified{color:var(--mod)}
+
+@media (max-width:800px){
+ .inputs,.drops{grid-template-columns:1fr}
+ .zapp{grid-template-columns:1fr}.side{max-height:240px}
+ .dv .lines{min-width:480px}
+}

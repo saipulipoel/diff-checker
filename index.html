@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diff Tool: Text Compare & Zip Diff</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Libraries (pinned versions). To go fully offline, download these into js/ and change the paths. -->
+  <script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+</head>
+<body>
+  <header class="top">
+    <h1>Diff Tool</h1>
+    <nav class="tabs" role="tablist">
+      <button role="tab" class="tab active" data-tab="text" aria-selected="true">Text Compare</button>
+      <button role="tab" class="tab" data-tab="zip" aria-selected="false">Zip Diff Check</button>
+    </nav>
+    <button id="theme" class="btn" title="Toggle light/dark theme">Theme</button>
+  </header>
+
+  <!-- ============ Feature 1: Text Compare ============ -->
+  <main id="tab-text" class="panel">
+    <div class="inputs">
+      <label>Original <textarea id="t-a" spellcheck="false" placeholder="Paste original text"></textarea></label>
+      <label>Modified <textarea id="t-b" spellcheck="false" placeholder="Paste modified text"></textarea></label>
+    </div>
+    <div class="bar">
+      <button id="t-run" class="btn primary">Compare</button>
+      <label class="chk"><input type="checkbox" id="t-live"> Compare as I type</label>
+      <span id="t-stat" class="muted"></span>
+    </div>
+    <div id="t-out"></div>
+  </main>
+
+  <!-- ============ Feature 2: Zip Diff Check ============ -->
+  <main id="tab-zip" class="panel" hidden>
+    <div class="drops">
+      <div class="drop" id="drop-a" tabindex="0"><b>Previous version</b><span>Drop a .zip here, or click to select</span><input type="file" accept=".zip" hidden></div>
+      <div class="drop" id="drop-b" tabindex="0"><b>Current version</b><span>Drop a .zip here, or click to select</span><input type="file" accept=".zip" hidden></div>
+    </div>
+    <div id="z-msg" class="muted"></div>
+    <div id="z-app" class="zapp" hidden>
+      <aside class="side">
+        <div class="filters" role="group" aria-label="Filter files">
+          <button class="chip active" data-f="all">All</button>
+          <button class="chip" data-f="added">Added</button>
+          <button class="chip" data-f="removed">Removed</button>
+          <button class="chip" data-f="modified">Modified</button>
+        </div>
+        <div id="z-count" class="muted small"></div>
+        <div id="z-tree" class="tree"></div>
+      </aside>
+      <section class="view">
+        <div class="vhead">
+          <span id="z-path" class="path">Select a file</span>
+          <span id="z-badge"></span>
+          <span class="spacer"></span>
+          <button id="z-prev" class="btn sm">Prev</button>
+          <span id="z-pos" class="muted small"></span>
+          <button id="z-next" class="btn sm">Next</button>
+        </div>
+        <div id="z-diff"></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/diffview.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
